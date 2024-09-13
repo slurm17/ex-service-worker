@@ -72,8 +72,8 @@ function registerValidSW(swUrl, config) {
                   'tabs for this page are closed. See https://cra.link/PWA.'
               );
               // Fuerza a hacer un skipWainting() para que los cambios sean visibles luego del reload()
-              registration.waiting.postMessage({ type: 'SKIP_WAITING' })
-              window.location.reload()
+              // registration.waiting.postMessage({ type: 'SKIP_WAITING' })
+              // window.location.reload()
               // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
@@ -135,5 +135,12 @@ export function unregister() {
       .catch((error) => {
         console.error(error.message);
       });
+  }
+}
+
+export function onServiceWorkerUpdate(registration) {
+  if (registration.waiting) {
+    registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    window.location.reload(); // Recarga la aplicación para obtener la nueva versión
   }
 }

@@ -61,6 +61,14 @@ registerRoute(
   })
 );
 
+self.addEventListener('install', (event) => {
+  self.skipWaiting(); // Hace que el nuevo service worker se active de inmediato
+});
+
+// self.addEventListener('activate', (event) => {
+//   event.waitUntil(clients.claim()); // Hace que los clientes actuales usen el nuevo service worker de inmediato
+// });
+
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
