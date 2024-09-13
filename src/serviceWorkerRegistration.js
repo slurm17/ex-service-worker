@@ -71,7 +71,9 @@ function registerValidSW(swUrl, config) {
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://cra.link/PWA.'
               );
-
+              // Fuerza a hacer un skipWainting() para que los cambios sean visibles luego del reload()
+              registration.waiting.postMessage({ type: 'SKIP_WAITING' })
+              window.location.reload()
               // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
