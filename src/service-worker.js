@@ -91,11 +91,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    clientsClaim().then(() => {
-      return clientsClaim().matchAll().then(clients => {
-        clients.forEach(client => client.navigate(client.url)); // Refresca automáticamente
-      });
-    })
+    clientsClaim()
   );
 });
 
