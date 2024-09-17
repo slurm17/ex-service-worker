@@ -77,4 +77,26 @@ self.addEventListener('message', (event) => {
   }
 });
 
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          return caches.delete(cacheName); // Borra las cachés existentes
+        })
+      );
+    })
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    clientsClaim().then(() => {
+      return clientsClaim().matchAll().then(clients => {
+        clients.forEach(client => client.navigate(client.url)); // Refresca automáticamente
+      });
+    })
+  );
+});
+
 // Any other custom service worker logic can go here.
